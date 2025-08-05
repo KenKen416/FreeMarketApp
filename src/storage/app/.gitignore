@@ -1,8 +1,6 @@
 # まず従来通り全ファイルを無視
 *
 # ただし images フォルダは無視しない
-!images/
-!images/**
-
+!public/
 # .gitignore 自身は残す
 !.gitignore
