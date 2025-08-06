@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.5;
+  background-color: white;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 1rem;
+  /* = 16px */
+}
+
+
+
+h1 {
+  font-size: 2rem;
+  /* = 32px */
+}
+
+h2 {
+  font-size: 1.5rem;
+  /* = 24px */
+}
+
+p {
+  font-size: 0.875rem;
+  /* = 14px */
+}
+
+/* 以下、headerのスタイルを追加 */
+header {
+  background-color:black ;
+  color: white;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.search-form {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+}
+.nav__list{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.create-btn{
+  background-color:white;
+  color:black;
+  opacity: 1;
+}
+.logout-button {
+  color: inherit;
+  font-size: inherit;
+ }

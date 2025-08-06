@@ -1,0 +1,56 @@
+main {
+  margin: 0 auto;
+  width: calc(100% - 3rem);
+  max-width: 600px;
+}
+
+.profile-edit {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+}
+
+.profile-edit__title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.profile-edit__form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.profile-image {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+.profile-edit__image {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.btn--file {
+  background: white;
+  color: #FF5555;
+  border: #FF5555 solid 1px;
+  margin-left: 3rem;
+  width: 10rem;
+  padding: 0.5rem;
+}
+
+.input--file {
+  display: none;
+}
+
+.btn--update {
+  margin-top: 1.5rem;
+}

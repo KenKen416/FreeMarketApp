@@ -1,0 +1,174 @@
+main {
+  margin: 0 auto;
+  width: calc(100% - 5rem);
+  max-width: 1000px;
+}
+
+.item-show {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  justify-content: center;
+  align-items: self-start;
+}
+
+.item-show__image {
+  width: 45%;
+  max-width: 600px;
+  margin-right: 2rem;
+}
+
+.item-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.item-show__info {
+  width: 45%;
+}
+
+.item-show__title {
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.item-show__brand {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+.item-show__price {
+  margin-top: 0.5rem;
+}
+
+.item-show__yen-symbol {
+  font-size: 1rem;
+}
+
+.item-show__price-value {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.item-show__tax {
+  font-size: 1rem;
+}
+
+.item-show__likes-comments {
+  display: flex;
+  justify-content: left;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.likes,
+.comments-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2rem;
+  justify-content: center;
+}
+
+.likes-button,
+.comments-button {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.counts {
+  font-size: 0.5rem;
+  line-height: 1;
+}
+
+.purchase-button {
+  margin-top: 1rem;
+}
+
+.sub-title {
+  font-weight: bold;
+  margin-top: 1.5rem;
+}
+
+.item-show__description-value {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.item-show__category,
+.item-show__condition {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.detail--title,.comment--title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-right: 2rem;
+  text-wrap: nowrap;
+}
+
+.category-tag {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 0.25rem 1rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+
+.comment-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.comment-user__image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.user-image {
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.comment-user__name {
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+.comment-text{
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 0.25rem;
+}
+.comment--title{
+  margin-top: 0.5rem;
+}
+.input-comment {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  height: 5rem;
+}
+
+.btn--comment{
+  margin-top:1rem;
+}

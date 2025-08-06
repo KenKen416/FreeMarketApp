@@ -1,0 +1,96 @@
+main {
+  margin: 0 auto;
+  width: calc(100% - 5rem);
+  max-width: 1400px;
+
+}
+.payment-form{
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  justify-content: space-between;
+}
+.section-left {
+  width: 60%;
+  margin-right: 5rem;
+  display: flex;
+  flex-direction: column;
+}
+.item-info,.payment-select,.delivery-address {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #000;
+}
+.item-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  gap: 2rem;
+}
+.item-image {
+  width: 45%;
+  max-width: 200px;
+}
+.item-image__img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.item-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+.item-price {
+  display: flex;
+  align-items: left;
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+}
+.sub-title {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: normal;
+  position: relative;
+}
+.input--select-payment {
+  width: 80%;
+  max-width: 300px;
+  margin-top: 1.5rem;
+  margin-left: 3rem;
+}
+.address-change {
+  position: absolute;
+  right: 2rem;
+  font-size: 1.25rem;
+  color:blue;
+  text-decoration: none;
+  opacity: 0.8;
+}
+.address-change:hover {
+  opacity: 1;
+  font-weight: bold;
+}
+.address-info {
+  margin-top: 1.5rem;
+  margin-left: 3rem;
+  font-size: 1.25rem;
+  
+}
+.section-right {
+  width: 35%;
+}
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+.payment-table__td {
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  font-size: 1.25rem;
+}
+.btn--purchase {
+ margin-top: 2rem;
+}
