@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,32 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('items.index');
-});
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::get('/mypage/profile', function () {
-    $user = (object) [
-        'name' => 'John Doe',
-        'email' => '',
-        'image' => null,
-        'post_code' => null
-    ];
-    return view('profile.edit', compact('user'));
-})->name('profile.edit');
-Route::get('/sell', function () {
-    return view('items.create');
-})->name('items.create');
 
-Route::get('/purchase/address/{item_id}', function () {
-    return view('purchases.edit_address');
-})->name('purchases.edit_address');
-
+Route::get('/', [ItemController::class, 'index'])->name('items.index');
 Route::get('/item/{item_id}', function () {
     $item = (object) [
         'id' => 1,
@@ -53,16 +31,39 @@ Route::get('/item/{item_id}', function () {
     return view('items.show', compact('item'));
 })->name('items.show');
 
-Route::get('/purchase/{item_id}', function () {
-    $item = (object) [
-        'id' => 1,
-        'name' => 'オレンジ３個',
-        'image' => 'orange.png',
-        'description' => '美味しいオレンジです.',
-        'price' => 1000,
-        'brand_name' => 'オレンジ農園',
-        'item_condition' => '新品',
-        'categories' => ['食べ物', '果物', '食べ物', '果物', '食べ物', '果物', '食べ物', '果物'],
-    ];
-    return view('purchases.index', compact('item'));
-})->name('purchases.index');
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/mypage/profile', function () {
+        $user = (object) [
+            'name' => 'John Doe',
+            'email' => '',
+            'image' => null,
+            'post_code' => null
+        ];
+        return view('profile.edit', compact('user'));
+    })->name('profile.edit');
+    Route::get('/sell', function () {
+        return view('items.create');
+    })->name('items.create');
+
+    Route::get('/purchase/address/{item_id}', function () {
+        return view('purchases.edit_address');
+    })->name('purchases.edit_address');
+
+
+
+    Route::get('/purchase/{item_id}', function () {
+        $item = (object) [
+            'id' => 1,
+            'name' => 'オレンジ３個',
+            'image' => 'orange.png',
+            'description' => '美味しいオレンジです.',
+            'price' => 1000,
+            'brand_name' => 'オレンジ農園',
+            'item_condition' => '新品',
+            'categories' => ['食べ物', '果物', '食べ物', '果物', '食べ物', '果物', '食べ物', '果物'],
+        ];
+        return view('purchases.index', compact('item'));
+    })->name('purchases.index');
+});

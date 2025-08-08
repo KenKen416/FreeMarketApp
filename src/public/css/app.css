@@ -55,36 +55,61 @@ p {
 
 /* 以下、headerのスタイルを追加 */
 header {
-  background-color:black ;
+  background-color: black;
   color: white;
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
+
 .header__inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
 }
+
 .search-form {
   flex: 1;
   display: flex;
   align-items: center;
   max-width: 600px;
 }
-.nav__list{
+
+.nav__list {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
-.create-btn{
-  background-color:white;
-  color:black;
+
+.create-btn {
+  background-color: white;
+  color: black;
   opacity: 1;
 }
+
 .logout-button {
   color: inherit;
   font-size: inherit;
- }
+}
+
+.alert {
+  width: 100%;
+  background-color: aquamarine;
+  color: red;
+  animation: fadeOut 6s;
+  animation-fill-mode: both;
+  text-align: center;
+  margin-top: 0.51rem;
+  font-size: 1rem;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

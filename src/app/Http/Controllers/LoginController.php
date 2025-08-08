@@ -12,6 +12,12 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
+public function create()
+    {
+        return view('auth.login');
+    }
+
+
     public function store(LoginRequest $request)
     {
         $credentials = $request->validated();
@@ -44,5 +50,27 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('success', 'ログアウトしました');
+    }
+
+    public function loginFromEmailVerify(Request $request)
+    {
+        // ① 認証済みユーザーを確実にログイン
+        $user = Auth::user();
+        Auth::login($user);
+
+        // ② セッション再生成
+        $request->session()->regenerate();
+
+        // ③ 初回ログインチェック
+        /** @var \App\Models\User $user */
+        if (is_null($user->last_login_at)) {
+            $user->update(['last_login_at' => now()]);
+            return redirect('/mypage/profile')
+                ->with('success', '初回ログインありがとうございます！プロフィールを設定してください');
+        }
+
+        // ④ 通常フロー（store と同じリダイレクト先）
+        return redirect()->intended('/')
+            ->with('success', 'ログインしました');
     }
 }

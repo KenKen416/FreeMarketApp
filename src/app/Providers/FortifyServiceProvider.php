@@ -12,6 +12,8 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Cache\RateLimiting\Limit;
+use Laravel\Fortify\Contracts\VerifyEmailResponse as VerifyEmailResponseContract;
+use App\Http\Responses\VerifyEmailResponse;
 
 
 
@@ -33,6 +35,10 @@ class FortifyServiceProvider extends ServiceProvider
             AuthenticatedSessionController::class,
             LoginController::class
         );
+        $this->app->singleton(
+            VerifyEmailResponseContract::class,
+            VerifyEmailResponse::class
+        );
     }
 
     /**
@@ -40,6 +46,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         Fortify::registerView(fn() => view('auth.register'));
         Fortify::loginView(fn() => view('auth.login'));
         Fortify::verifyEmailView(fn() => view('auth.verify-email'));

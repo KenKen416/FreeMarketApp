@@ -4,13 +4,20 @@
 @endsection
 @section('title', 'ログイン')
 @section('content')
+@if (session('failed'))
+<div class="alert alert-warning">
+  {{ session('failed') }}
+</div>
+@endif
+
+
 <div class="login">
   <h1 class="login__title">ログイン</h1>
-  <form action="" method="POST" class="login__form">
+  <form action="{{route('login')}}" method="POST" class="login__form">
     @csrf
     <div class="form-group">
       <label for="email">メールアドレス</label>
-      <input type="email" name="email" id="email" class="input" value="{{old('email')}}">
+      <input type="text" name="email" id="email" class="input" value="{{old('email')}}">
       @error('email')
       <span class="error-message">{{ $message }}</span>
       @enderror
