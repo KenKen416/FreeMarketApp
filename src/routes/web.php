@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,19 +18,12 @@ use App\Http\Controllers\ItemController;
 
 
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
-Route::get('/item/{item_id}', function () {
-    $item = (object) [
-        'id' => 1,
-        'name' => 'オレンジ３個',
-        'image' => 'orange.png',
-        'description' => '美味しいオレンジです.',
-        'price' => 1000,
-        'brand_name' => 'オレンジ農園',
-        'item_condition' => '新品',
-        'categories' => ['食べ物', '果物', '食べ物', '果物', '食べ物', '果物', '食べ物', '果物'],
-    ];
-    return view('items.show', compact('item'));
-})->name('items.show');
+
+Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
+
+
+
+
 
 
 
@@ -66,4 +60,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ];
         return view('purchases.index', compact('item'));
     })->name('purchases.index');
+
+
+    Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->name('likes.store');
+    Route::delete('/item/{item_id}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
+
+    
 });

@@ -18,15 +18,32 @@
     </div>
     <div class="item-show__likes-comments">
       <div class="likes">
-        <a href="" class="likes-button">☆</a>
-        <span class="counts">1
-          <!-- likeの数を持ってくる -->
+        @if($likes_user_count == 1)
+        <form action="{{route('likes.destroy', ['item_id' => $item->id])}}" method="POST" class="likes-form">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="likes-button">
+            <img src="{{asset('storage/images/star_color.png')}}" alt="いいねのアイコン" class="likes-icon icon">
+          </button>
+        </form>
+        @else
+        <form action="{{route('likes.store', ['item_id' => $item->id])}}" method="POST" class="likes-form">
+          @csrf
+          <button type="submit" class="likes-button">
+            <img src="{{asset('storage/images/star.png')}}" alt="いいねのアイコン" class="likes-icon icon">
+          </button>
+        </form>
+        @endif
+        <span class="counts">
+          {{ $likes_count ?? 0 }}
         </span>
       </div>
       <div class="comments-link">
-        <a href="" class="comments-button">⚪︎</a>
-        <span class="counts">1
-          <!-- コメントの数を持ってくる -->
+        <a href="#comments" class="comments-button">
+          <img src="{{asset('storage/images/comment.png')}}" alt="コメントのアイコン" class="comment-icon icon">
+        </a>
+        <span class="counts">
+          {{ $comments_count ?? 0 }}
         </span>
       </div>
     </div>
@@ -34,8 +51,7 @@
     <div class="item-show__description">
       <h2 class="sub-title">商品説明</h2>
       <p class="item-show__description-value">
-        {{$item->description }}
-        <!-- 改行対応が多分必要 -->
+        {!! nl2br(e($item->description)) !!}
       </p>
     </div>
     <div class="item-show__detail">
@@ -43,40 +59,42 @@
       <div class="item-show__category">
         <p class="detail--title">カテゴリー</p>
         <div class="category-tag">
-          @foreach($item->categories ?? [] as $category)
-          <span class="tag">{{ $category }}</span>
+          @foreach($categories as $category)
+          <span class="tag">{{ $category->name }}</span>
           @endforeach
         </div>
       </div>
       <div class="item-show__condition">
         <p class="detail--title">商品の状態</p>
-        {{ $item->item_condition ?? '' }}
+        {{ $item_condition ->name }}
       </div>
     </div>
     <div class="item-show__comments">
-      <h2 class="sub-title">コメント(コメント数)
-        <!-- コメント数を持ってくる -->
-      </h2>
+      <h2 class="sub-title">コメント({{ $comments_count ?? 0 }})</h2>
       <div class="item-show__comments-value">
-        <!-- foreach -->
+        @foreach($comments as $comment)
 
         <div class="comment-user">
           <div class="comment-user__image">
-            <img src=" " alt="" class="user-image">
+            <img
+              src="{{ $comment->user->profile->image ?
+              asset('storage/images/' . $comment->user->profile->image) :
+              asset('storage/images/default.png') }}"
+              alt=""
+              class="user-image">
           </div>
           <div class="comment-user__name">
-            ユーザー名
+            {{ $comment->user->profile->name }}
           </div>
         </div>
         <p class="comment-text">
-          コメント内容
-          <!-- コメント内容を持ってくる -->
+          {{ $comment->comment }}
         </p>
 
-        <!-- endforeach -->
+        @endforeach
       </div>
       <form action="" class="comment-create">
-        <p class="comment--title">商品へのコメント</p>
+        <p class="comment--title" id="comments">商品へのコメント</p>
         <textarea name="" id="" class="input input-comment"></textarea>
         <button class="btn btn--comment" type="submit">コメントを送信する</button>
       </form>

@@ -70,6 +70,11 @@ main {
   margin-right: 2rem;
   justify-content: center;
 }
+.icon {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.25rem;
+}
 
 .likes-button,
 .comments-button {
@@ -78,7 +83,7 @@ main {
 }
 
 .counts {
-  font-size: 0.5rem;
+  font-size: 0.75rem;
   line-height: 1;
 }
 
@@ -150,12 +155,13 @@ main {
 }
 .comment-user__name {
   font-weight: bold;
-  font-size: 0.875rem;
+  font-size: 0.7rem;
 }
 .comment-text{
   width: 100%;
   background-color: #f0f0f0;
-  padding: 0.25rem;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
 }
 .comment--title{
   margin-top: 0.5rem;
