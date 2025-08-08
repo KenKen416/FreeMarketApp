@@ -75,31 +75,42 @@
         @foreach($comments as $comment)
 
         <div class="comment-user">
+          @if($comment->user->profile)
           <div class="comment-user__image">
             <img
               src="{{ $comment->user->profile->image ?
               asset('storage/images/' . $comment->user->profile->image) :
               asset('storage/images/default.png') }}"
-              alt=""
+              alt="ユーザー画像"
               class="user-image">
           </div>
           <div class="comment-user__name">
             {{ $comment->user->profile->name }}
           </div>
+          @else
+          <div class="comment-user__image">
+            <img src="{{ asset('storage/images/default.png') }}" alt="ユーザー画像" class="user-image">
+          </div>
+          <div class="comment-user__name">
+            名前未設定ユーザー
+          </div>
+          @endif
         </div>
         <p class="comment-text">
           {{ $comment->comment }}
         </p>
-
         @endforeach
+        <form action="{{ route('comments.store', ['item_id' => $item->id]) }}" method="POST" class="comment-create">
+          @csrf
+          <p class="comment--title" id="comments">商品へのコメント</p>
+          <textarea name="comment" id="" class="input input-comment"></textarea>
+          @error('comment')
+          <span class="error-message">{{ $message }}</span>
+          @enderror
+          <button class="btn btn--comment" type="submit">コメントを送信する</button>
+        </form>
       </div>
-      <form action="" class="comment-create">
-        <p class="comment--title" id="comments">商品へのコメント</p>
-        <textarea name="" id="" class="input input-comment"></textarea>
-        <button class="btn btn--comment" type="submit">コメントを送信する</button>
-      </form>
     </div>
   </div>
-</div>
 </div>
 @endsection

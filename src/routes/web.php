@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,5 +64,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->name('likes.store');
     Route::delete('/item/{item_id}/like', [LikeController::class, 'destroy'])->name('likes.destroy');
 
-    
+    Route::post('/item/{item_id}/comment', [CommentController::class, 'store'])->name('comments.store');
 });
