@@ -36,7 +36,7 @@ $keyword = request('keyword');
     <span class="badge badge--sold">sold</span>
     @endif
     <a href="{{route('items.show', ['item_id' => $item->id])}}" class="item-card__link">
-      <img src="{{asset('storage/images/'.$item->image)}}" alt="{{$item->name}}" class="item-card__image">
+      <img src="{{asset('storage/'.$item->image)}}" alt="{{$item->name}}" class="item-card__image">
       <h3 class="item-card__title">{{$item->name}}</h3>
     </a>
   </div>

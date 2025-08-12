@@ -41,7 +41,7 @@
             </form>
           </li>
           @endauth
-          <li><a href="">マイページ</a></li>
+          <li><a href="{{route('mypage.index')}}">マイページ</a></li>
           <li><a href="{{route('items.create')}}" class="btn create-btn">出品</a></li>
         </ul>
       </nav>

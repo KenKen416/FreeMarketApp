@@ -6,7 +6,7 @@
 @section('content')
 <div class="edit-address">
   <h1 class="edit-address__title">住所の変更</h1>
-  <form action="" method="POST" class="edit-address__form">
+  <form action="{{ route('update.address', ['item_id' => $item_id]) }}" method="POST" class="edit-address__form">
     @csrf
 
     <div class="form-group">

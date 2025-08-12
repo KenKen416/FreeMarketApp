@@ -6,7 +6,7 @@
 @section('content')
 <div class="item-show">
   <div class="item-show__image">
-    <img src="{{ asset('storage/images/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
+    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
   </div>
   <div class="item-show__info">
     <h1 class="item-show__title">{{ $item->name }}</h1>
@@ -79,20 +79,20 @@
           <div class="comment-user__image">
             <img
               src="{{ $comment->user->profile->image ?
-              asset('storage/images/' . $comment->user->profile->image) :
+              asset('storage/' . $comment->user->profile->image) :
               asset('storage/images/default.png') }}"
               alt="ユーザー画像"
               class="user-image">
           </div>
           <div class="comment-user__name">
-            {{ $comment->user->profile->name }}
+            {{ $comment->user->profile->name }}さん
           </div>
           @else
           <div class="comment-user__image">
             <img src="{{ asset('storage/images/default.png') }}" alt="ユーザー画像" class="user-image">
           </div>
           <div class="comment-user__name">
-            名前未設定ユーザー
+            名前未設定ユーザーさん
           </div>
           @endif
         </div>

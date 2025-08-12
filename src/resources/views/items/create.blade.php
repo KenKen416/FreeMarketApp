@@ -6,7 +6,7 @@
 @section('content')
 <div class="item-create">
   <h1 class="item-create__title">商品の出品</h1>
-  <form action="" method="POST" class="item-create__form" enctype="multipart/form-data">
+  <form action="{{ route('items.store') }}" method="POST" class="item-create__form" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label>商品画像</label>
@@ -34,50 +34,16 @@
       <div class="form-group">
         <label>カテゴリー</label>
         <div class="category-group">
-          <input type="checkbox"
-            name="category_id[]"
-            id="category_id_変数"
-            value="変数"
-            class="category-checkbox"
-            {{ in_array('変数', old('category_id', [])) ? 'checked' : '' }}>
-          <label for="category_id_変数" class="category-label">おもちゃ</label>
-          <!-- 変数で入れるのは後でやります １のところとか忘れずに-->
-          <!-- ダミー -->
-
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="2" class="category-checkbox">
-          <label for="category_id" class="category-label">とても長いカテゴリー名です</label>
-          <input type="checkbox" name="category_id[]" id="category_id-2"
-            value="1" class="category-checkbox">
-          <label for="category_id-2" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <input type="checkbox" name="category_id[]" id="category_id"
-            value="1" class="category-checkbox">
-          <label for="category_id" class="category-label">おもちゃ</label>
-          <!-- ダミー -->
+          @foreach($categories as $category)
+          <label>
+            <input type="checkbox"
+              name="category_id[]"
+              value="{{$category->id}}"
+              class="category-checkbox"
+              {{ in_array($category->id, old('category_id', [])) ? 'checked' : '' }}>
+            <div class="category-label">{{$category->name}}</div>
+          </label>
+          @endforeach
         </div>
         @error('category_id')
         <span class="error-message">{{ $message }}</span>
@@ -86,16 +52,14 @@
       <div class="form-group">
         <label for="condition_id">商品の状態</label>
         <select name="condition_id" id="condition_id" class="input">
-          <option value="">選択してください</option>
-          <option value="1"
-            {{old('condition_id') == "1" ? 'checked' : ''}}>新品</option>
-          <option value="2" {{old('condition_id') == "2" ? 'checked' : ''}}>目立った傷や汚れなし</option>
-          <option value="3"
-            {{old('condition_id') == "3" ? 'checked' : ''}}>やや傷や汚れあり</option>
-          <option value="4"
-            {{old('condition_id') == "4" ? 'checked' : ''}}>傷や汚れあり</option>
-          <option value="5"
-            {{old('condition_id') == "5" ? 'checked' : ''}}>全体的に状態が悪い</option>
+          <option value="" disabled selected>選択してください</option>
+          @foreach($conditions as $condition)
+          <option
+            value="{{$condition->id}}"
+            {{old('condition_id') == $condition->id ? 'selected' : ''}}>
+            {{$condition->name}}
+          </option>
+          @endforeach
         </select>
         @error('condition_id')
         <span class="error-message">{{ $message }}</span>

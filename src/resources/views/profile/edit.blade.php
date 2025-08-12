@@ -10,7 +10,7 @@
     @csrf
     @method('PUT')
     <div class="form-group profile-image">
-      <img src="{{$user->image ? asset('storage/images/'.$user->image) : asset('storage/images/default.png')}}" alt="プロフィール画像"
+      <img src="{{$profile->image ? asset('storage/'.$profile->image) : asset('storage/images/default.png')}}" alt="プロフィール画像"
         class="profile-edit__image" width="150" height="150" id="preview">
       <label for="imageInput" class="btn btn--file">画像を選択する</label>
       <input type="file" name="image" id="imageInput" class="input input--file">
@@ -30,28 +30,28 @@
     </div>
     <div class="form-group">
       <label for="name">ユーザー名</label>
-      <input type="text" name="name" id="name" class="input" value="{{old('name',$user->name ?? '')}}">
+      <input type="text" name="name" id="name" class="input" value="{{old('name',$profile->name ?? '')}}">
       @error('name')
       <span class="error-message">{{ $message }}</span>
       @enderror
     </div>
     <div class="form-group">
       <label for="post_code">郵便番号</label>
-      <input type="text" name="post_code" id="post_code" class="input" value="{{old('post_code',$user->post_code ?? '')}}">
+      <input type="text" name="post_code" id="post_code" class="input" value="{{old('post_code',$profile->post_code ?? '')}}">
       @error('post_code')
       <span class="error-message">{{ $message }}</span>
       @enderror
     </div>
     <div class="form-group">
       <label for="address">住所</label>
-      <input type="text" name="address" id="address" class="input" value="{{old('address',$user->address ?? '')}}">
+      <input type="text" name="address" id="address" class="input" value="{{old('address',$profile->address ?? '')}}">
       @error('address')
       <span class="error-message">{{ $message }}</span>
       @enderror
     </div>
     <div class="form-group">
       <label for="building">建物</label>
-      <input type="text" name="building" id="building" class="input" value="{{old('building',$user->building ?? '')}}">
+      <input type="text" name="building" id="building" class="input" value="{{old('building',$profile->building ?? '')}}">
       @error('building')
       <span class="error-message">{{ $message }}</span>
       @enderror

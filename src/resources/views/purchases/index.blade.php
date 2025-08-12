@@ -4,12 +4,12 @@
 @endsection
 @section('title', '購入確認')
 @section('content')
-<form action="" method="POST" class="payment-form">
+<form action="{{ route('purchases.store', ['item_id' => $item->id]) }}" method="POST" class="payment-form">
   @csrf
   <div class="section-left">
     <div class="item-info">
       <div class="item-image">
-        <img src="{{asset('storage/images/' . $item->image)}}" alt="" class="item-image__img">
+        <img src="{{asset('storage/' . $item->image)}}" alt="" class="item-image__img">
       </div>
       <div class="item-details">
         <h1 class="item-name">{{$item->name}}</h1>
@@ -37,17 +37,16 @@
       </h3>
       <div class="address-info">
         <div class="post_code">
-          〒 1231234
+          〒 {{ $post_code ?? '未設定【変更するボタンから入力してください！】' }}
         </div>
         <div class="address-building">
-          愛知県名古屋市１丁目
-          名古屋ビル１1111111111111111111111111２３号室
+          {{ $address ?? '未設定【変更するボタンから入力してください！】' }}
+          {{ $building ?? '' }}
         </div>
 
-        <input type="hidden" name="post_code" class="" value="1231234">
-        <input type="hidden" name="address" class="" value="愛知県名古屋市１丁目">
-        <input type="hidden" name="building" class="" value="名古屋ビル１２３号室">
-        <!-- 住所を取ってくること、住所変更を反映することの記述が必要 -->
+        <input type="hidden" name="post_code" class="" value="{{ $post_code }}">
+        <input type="hidden" name="address" class="" value="{{ $address }}">
+        <input type="hidden" name="building" class="" value="{{ $building }}">
         @error('post_code')
         <span class="error-message">{{ $message }}</span>
         @enderror

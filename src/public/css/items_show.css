@@ -70,6 +70,7 @@ main {
   margin-right: 2rem;
   justify-content: center;
 }
+
 .icon {
   width: 2rem;
   height: 2rem;
@@ -111,7 +112,8 @@ main {
   margin-top: 0.5rem;
 }
 
-.detail--title,.comment--title {
+.detail--title,
+.comment--title {
   font-weight: bold;
   font-size: 1.1rem;
   margin-right: 2rem;
@@ -146,26 +148,34 @@ main {
   height: 2rem;
   border-radius: 50%;
   margin-right: 0.5rem;
+  margin-bottom: 0.1rem;
+  object-fit: cover;
 }
 
 .user-image {
   width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
+
 }
+
 .comment-user__name {
   font-weight: bold;
   font-size: 0.7rem;
 }
-.comment-text{
+
+.comment-text {
   width: 100%;
   background-color: #f0f0f0;
   padding: 0.25rem 1rem;
   border-radius: 0.5rem;
 }
-.comment--title{
+
+.comment--title {
   margin-top: 0.5rem;
 }
+
 .input-comment {
   width: 100%;
   border: 1px solid #ccc;
@@ -175,6 +185,6 @@ main {
   height: 5rem;
 }
 
-.btn--comment{
-  margin-top:1rem;
+.btn--comment {
+  margin-top: 1rem;
 }

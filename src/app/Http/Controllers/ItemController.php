@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExhibitionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
-use App\Models\User;
 use App\Models\Like;
 use App\Models\Condition;
 use App\Models\Comment;
+use App\Models\Category;
+
 
 class ItemController extends Controller
 {
@@ -63,9 +65,28 @@ class ItemController extends Controller
 
     public function create()
     {
-
-        return view('items.create');
+        $categories = Category::all();
+        $conditions = Condition::all();
+        return view('items.create', compact('categories', 'conditions'));
     }
 
-    public function store(Request $request) {}
+    public function store(ExhibitionRequest $request)
+    {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        $data = ([
+            'user_id' => $user->id,
+            'name' => $request->input('name'),
+            'condition_id' => $request->input('condition_id'),
+            'brand_name' => $request->input('brand_name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+        ]);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+        $item = Item::create($data);
+        $item->categories()->attach($request->input('category_id'));
+        return redirect()->route('mypage.index')->with('success', '商品を出品しました。');
+    }
 }

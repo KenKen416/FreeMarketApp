@@ -70,6 +70,17 @@ header {
   gap: 2rem;
 }
 
+.logo {
+ width: 20%;
+ max-width: 300px;
+
+}
+
+.logo__image {
+  width: 100%;
+  height: auto;
+}
+
 .search-form {
   flex: 1;
   display: flex;
