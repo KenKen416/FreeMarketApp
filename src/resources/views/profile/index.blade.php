@@ -21,7 +21,7 @@
     @endif
 
     <div class="profile-header__name">
-      {{ $profile->name }}
+      {{$profile->name ? $profile->name : '名前未設定'}}
     </div>
   </div>
   <a href="{{ route('profile.edit') }}" class="btn btn-profile-edit">プロフィールを編集</a>

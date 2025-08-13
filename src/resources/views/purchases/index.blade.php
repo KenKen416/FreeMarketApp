@@ -37,10 +37,10 @@
       </h3>
       <div class="address-info">
         <div class="post_code">
-          〒 {{ $post_code ?? '未設定【変更するボタンから入力してください！】' }}
+          〒 {{ $post_code ?? '' }}
         </div>
         <div class="address-building">
-          {{ $address ?? '未設定【変更するボタンから入力してください！】' }}
+          {{ $address ?? '' }}
           {{ $building ?? '' }}
         </div>
 

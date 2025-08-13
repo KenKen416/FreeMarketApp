@@ -33,7 +33,9 @@ main {
   text-align: left;
   position: relative;
   overflow: hidden;
+  object-fit: cover;
 }
+
 .badge {
   position: absolute;
   top: 1rem;
@@ -43,6 +45,12 @@ main {
   padding: 0rem 3rem;
   transform: rotate(45deg);
   ;
+}
+
+.item-card__image {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
 .item-card__link {

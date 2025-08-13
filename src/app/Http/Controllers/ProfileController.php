@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Http\Requests\ProfileRequest;
+use App\Models\Profile;
 
 class ProfileController extends Controller
 {
@@ -15,6 +16,15 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $profile = $user->profile;
+        if (!$profile) {
+            $profile = (object)[
+                'image'     => null,
+                'name'      => null,
+                'post_code' => null,
+                'address'   => null,
+                'building'  => null,
+            ];
+        }
 
         //購入した商品タブ選択時
         if (
@@ -47,12 +57,35 @@ class ProfileController extends Controller
         $user = Auth::user();
         $profile = $user->profile;
 
+        if (!$profile) {
+            $profile = (object)[
+                'image'     => null,
+                'name'      => null,
+                'post_code' => null,
+                'address'   => null,
+                'building'  => null,
+            ];
+        }
+
         return view('profile.edit', compact('profile'));
     }
     public function update(ProfileRequest $request)
     {
+
+        /** @var \App\Models\User|null $user */
         $user = Auth::user();
         $profile = $user->profile;
+
+
+        if (!$profile) {
+            $profile = $user->profile()->create([
+                'image'     => null,
+                'name'      => 'test',
+                'post_code' => 'test',
+                'address'   => 'test',
+                'building'  => null,
+            ]);
+        }
 
         $data = ([
             'name' => $request->input('name'),

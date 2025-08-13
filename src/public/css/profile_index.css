@@ -1,5 +1,5 @@
 main {
-  margin: 0 auto;
+  margin: 1rem auto;
   width: 100%;
 }
 
@@ -20,8 +20,8 @@ main {
 }
 
 .profile-header__image {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -86,6 +86,12 @@ main {
   padding: 0rem 3rem;
   transform: rotate(45deg);
   ;
+}
+
+.item-card__image {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 }
 
 .item-card__link {

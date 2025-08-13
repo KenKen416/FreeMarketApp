@@ -4,6 +4,11 @@
 @endsection
 @section('title', 'プロフィール設定')
 @section('content')
+@if (session('success'))
+<div class="alert alert-warning">
+  {{ session('success') }}
+</div>
+@endif
 <div class="profile-edit">
   <h1 class="profile-edit__title">プロフィール設定</h1>
   <form action="" method="POST" class="profile-edit__form" enctype="multipart/form-data">
