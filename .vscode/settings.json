@@ -21,8 +21,10 @@
     "mysqld",
     "phar",
     "phpmyadmin",
+    "phpredis",
     "phpunit",
     "Rolax",
+    "sslmode",
     "Starbacks"
   ]
 }
