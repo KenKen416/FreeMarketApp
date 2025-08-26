@@ -9,6 +9,8 @@ use Database\Seeders\ConditionsTableSeeder;
 use Database\Seeders\CategoriesTableSeeder;
 use App\Models\Item;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ItemCreateTest extends TestCase
 {
@@ -27,19 +29,24 @@ class ItemCreateTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
 
+        Storage::fake('public');
+        $file = UploadedFile::fake()->image('test.jpg');
+
+
         $itemData = [
+            'category_id' => [1, 2],
+            'condition_id' => 1,
             'name' => 'Test Item',
             'brand_name' => 'Test Brand',
-            'price' => 3333,
             'description' => 'Test Description',
-            'condition_id' => 1,
-            'categories' => [1, 2],
+            'price' => 3333,
+            'image' => $file,
         ];
 
-        $response = $this->post(route('items.store'), $itemData);
+        $response = $this->from(route('items.create'))->post(route('items.store'), $itemData);
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('items.index'));
+        $response->assertRedirect(route('mypage.index'));
 
         $this->assertDatabaseHas('items', [
             'name' => $itemData['name'],
