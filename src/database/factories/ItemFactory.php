@@ -16,9 +16,44 @@ class ItemFactory extends Factory
     public function definition()
     {
         $conditionId = Condition::query()->inRandomOrder()->value('id');
+        static $fruits = [
+            'りんご',
+            'みかん',
+            'バナナ',
+            'ぶどう',
+            'いちご',
+            '梨',
+            '柿',
+            '桃',
+            'スイカ',
+            'メロン',
+            'さくらんぼ',
+            'キウイ',
+            'パイナップル',
+            'マンゴー',
+            'グレープフルーツ',
+            'レモン',
+            'ライム',
+            'ブルーベリー',
+            'ラズベリー',
+            'ブラックベリー',
+            'ドラゴンフルーツ',
+            'パパイヤ',
+            'パッションフルーツ',
+            'すだち',
+            'ゆず',
+            'かぼす',
+            'びわ',
+            'いちじく',
+            'ざくろ',
+            'アボカド',
+            '栗'
+        ];
+
+        $name = $this->faker->randomElement($fruits);
         return [
             'user_id' => User::factory(),
-            'name' => $this->faker->word(),
+            'name' => $name,
             'image' => 'images/sample.png',
             'condition_id' => $conditionId,
             'brand_name' => $this->faker->company(),

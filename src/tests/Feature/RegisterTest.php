@@ -88,8 +88,7 @@ class RegisterTest extends TestCase
 
         $response->assertSee(self::MSG_PASSWORD_MISMATCH);
     }
-    // 全ての項目が入力されている場合、会員情報が登録され、!!!!プロフィール設定画面に遷移される!!!!
-    //プロフィール遷移は検証するかどうかは要検討
+    // 全ての項目が入力されている場合、会員情報が登録され、メール認証誘導画面へ遷移する
     public function test_register_success(): void
     {
         $register_data = $this->base() ?? [];
