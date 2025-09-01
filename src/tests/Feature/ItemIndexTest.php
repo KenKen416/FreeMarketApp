@@ -39,6 +39,10 @@ class ItemIndexTest extends TestCase
     {
         $notSoldItem = Item::factory()->create();
         $soldItem = Item::factory()->create();
+        $response = $this->get(self::URL);
+        $response->assertStatus(200);
+        $response->assertDontSeeText('sold');
+
         Purchase::factory()->create(['item_id' => $soldItem->id]);
 
         $response = $this->get(self::URL);

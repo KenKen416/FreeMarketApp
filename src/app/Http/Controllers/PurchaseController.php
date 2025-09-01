@@ -8,7 +8,8 @@ use App\Models\Item;
 use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PurchaseRequest;
-
+use Stripe\Stripe;
+use Stripe\StripeClient;
 
 class PurchaseController extends Controller
 {
@@ -48,23 +49,98 @@ class PurchaseController extends Controller
         $user = Auth::user();
         $item = Item::findOrFail($item_id);
 
-        // 購入情報を登録する
-        Purchase::create([
-            'user_id' => $user->id,
-            'item_id' => $item->id,
-            'post_code' => $request->post_code,
-            'address' => $request->address,
-            'building' => $request->building,
-            'payment_method' => $request->payment_method,
+        if ($request->payment_method === 'konbini') {
+            Purchase::create([
+                'user_id'        => $user->id,
+                'item_id'        => $item->id,
+                'post_code'      => $request->post_code,
+                'address'        => $request->address,
+                'building'       => $request->building,
+                'payment_method' => 'konbini',
+                'status'         => 'pending',
+            ]);
+            return redirect()->route('purchases.complete')
+                ->with('success', 'コンビニ払いの受付を完了しました。');
+        }
+
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        $session = $stripe->checkout->sessions->create([
+            'mode' => 'payment',
+            'payment_method_types' => ['card'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => ['name' => $item->name],
+                    'unit_amount'  => $item->price,
+                ],
+                'quantity' => 1,
+            ]],
+            'success_url'    => route('checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url'     => route('checkout.cancel'),
+            'customer_email' => $user->email,
+            'metadata' => [
+                'user_id'   => $user->id,
+                'item_id'   => $item->id,
+                'post_code' => $request->post_code,
+                'address'   => $request->address,
+                'building'  => $request->building ?? '',
+            ],
         ]);
 
+        return redirect()->away($session->url, 303);
 
-        return redirect('/')->with('success', '購入が完了しました。');
     }
 
-    public function success()
+
+    public function success(Request $request)
     {
-        // 購入成功画面の表示
-        return view('purchase.success');
+        $sessionId = $request->query('session_id');
+        if (!$sessionId) return view('checkout.success');
+
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+
+        $session = $stripe->checkout->sessions->retrieve($sessionId, []);
+
+        if (!$session->payment_intent) {
+            return view('checkout.success', compact('sessionId')); 
+        }
+        $pi = $stripe->paymentIntents->retrieve($session->payment_intent, []);
+
+        if ($pi->status !== 'succeeded') {
+            return view('checkout.success', compact('sessionId'));
+        }
+
+        $md = $session->metadata ?? new \stdClass();
+
+        $exists = Purchase::where('item_id', $md->item_id ?? 0)
+            ->where('payment_method', 'card')
+            ->where('status', 'paid')
+            ->exists();
+
+        if (!$exists) {
+            \App\Models\Purchase::create([
+                'user_id'        => $md->user_id,
+                'item_id'        => $md->item_id,
+                'post_code'      => $md->post_code,
+                'address'        => $md->address,
+                'building'       => $md->building,
+                'payment_method' => 'card',
+                'status'         => 'paid',
+                'stripe_session_id'        => $session->id,
+                'stripe_payment_intent_id' => $pi->id,
+            ]);
+        }
+
+        return view('checkout.success', compact('sessionId'));
+    }
+    public function cancel()
+    {
+        return view('checkout.cancel');
+    }
+
+    public function complete()
+    {
+        return view('purchases.complete');
     }
 }

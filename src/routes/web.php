@@ -6,6 +6,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,8 @@ Route::get('/', [ItemController::class, 'index'])->name('items.index');
 Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('items.show');
 
 
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/item/{item_id}/like', [LikeController::class, 'store'])->name('likes.store');
@@ -32,6 +35,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'updateAddress'])->name('update.address');
     Route::post('/purchase/{item_id}/store', [PurchaseController::class, 'store'])->name('purchases.store');
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('purchases.edit_address');
+    Route::get('/checkout/success', [PurchaseController::class, 'success'])
+        ->name('checkout.success');
+    Route::get('/checkout/cancel', [PurchaseController::class, 'cancel'])
+        ->name('checkout.cancel');
+    Route::get('/purchases/complete', [PurchaseController::class, 'complete'])
+        ->name('purchases.complete');
 
     Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,4 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
     Route::post('/sell', [ItemController::class, 'store'])->name('items.store');
+
+
+
+
 });
