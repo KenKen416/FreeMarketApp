@@ -56,14 +56,14 @@ class ItemIndexTest extends TestCase
         /** @var \App\Models\User $user */
         $user = User::factory()->create();
 
-        $ownItem = Item::factory()->create(['user_id' => $user->id]);
-        $notOwnItem = Item::factory()->create(['user_id' => User::factory()->create()->id]);
+        $ownItem = Item::factory()->create(['user_id' => $user->id, 'name' => 'AAA']);
+        $notOwnItem = Item::factory()->create(['user_id' => User::factory()->create()->id, 'name' => 'BBB']);
 
         $this->actingAs($user);
         $response = $this->get(self::URL);
         $response->assertStatus(200);
 
-        $response->assertDontSee($ownItem->name);
-        $response->assertSee($notOwnItem->name);
+        $response->assertDontSeeText($ownItem->name);
+        $response->assertSeeText($notOwnItem->name);
     }
 }

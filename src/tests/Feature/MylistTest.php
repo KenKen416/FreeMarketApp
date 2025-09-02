@@ -30,9 +30,9 @@ class MylistTest extends TestCase
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
 
-        $notLikedItem = Item::factory()->create();
-        $otherUserLikedItem = Item::factory()->create();
-        $likedItem = Item::factory()->create();
+        $notLikedItem = Item::factory()->create(['name' => 'Not Liked Item']);
+        $otherUserLikedItem = Item::factory()->create(['name' => 'Other User Liked Item']);
+        $likedItem = Item::factory()->create(['name' => 'Liked Item']);
         Like::factory()->create([
             'user_id' => $otherUser->id,
             'item_id' => $otherUserLikedItem->id,
