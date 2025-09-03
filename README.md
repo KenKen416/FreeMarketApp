@@ -112,7 +112,12 @@ STRIPE_SECRET=sk_test_51S0ENY5sTB06138YhTArK8hbgSvX7pvSBvCu92tJpvp2nUQ3fPIUn9IDx
 - プロフィール編集：/mypage/profile
 - 購入履歴：/mypage?page=buy
 - 出品履歴：/mypage?page=sell
+- その他の画面等については、基本設計書を参照してください。
+https://docs.google.com/spreadsheets/d/11_8Cg7bE7sEyg7BI1XoBiNtDQYSzN_YWwaQ1QJUA880/edit?gid=574125123#gid=574125123
 
+
+## テストユーザーのログイン情報
+- src/database/migrations/seeders/UsersTableSeeder.php に記載しています
 ---
 
 ## その他（注意事項、メモ）
