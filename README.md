@@ -22,7 +22,7 @@
 
 ### 1. リポジトリをクローン
 
-- git@github.com:KenKen416/FreeMarketApp.git
+- git clone git@github.com:KenKen416/FreeMarketApp.git
 - cd FreeMarketApp
 
 ### 2. Docker コンテナをビルド・起動
