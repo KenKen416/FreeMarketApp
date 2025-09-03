@@ -93,7 +93,9 @@ STRIPE_SECRET=sk_test_51S0ENY5sTB06138YhTArK8hbgSvX7pvSBvCu92tJpvp2nUQ3fPIUn9IDx
 
 ## ER 図
 
-- ***
+- https://github.com/KenKen416/FreeMarketApp/blob/main/ER.png もしくは、FreeMarketAppフォルダ直下のER.pngを参照ください。（.dioファイルも同じ場所に置いてあります）
+
+---
 
 ## 主なURL
 
@@ -115,6 +117,7 @@ STRIPE_SECRET=sk_test_51S0ENY5sTB06138YhTArK8hbgSvX7pvSBvCu92tJpvp2nUQ3fPIUn9IDx
 - その他の画面等については、基本設計書を参照してください。
 https://docs.google.com/spreadsheets/d/11_8Cg7bE7sEyg7BI1XoBiNtDQYSzN_YWwaQ1QJUA880/edit?gid=574125123#gid=574125123
 
+---
 
 ## テストユーザーのログイン情報
 - src/database/migrations/seeders/UsersTableSeeder.php に記載しています
