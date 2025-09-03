@@ -25,15 +25,7 @@
 - git clone git@github.com:KenKen416/FreeMarketApp.git
 - cd FreeMarketApp
 
-### 2. Docker コンテナをビルド・起動
-
-- docker compose up -d --build
-
-### 3. Composer をインストール
-
-- docker compose exec php composer install
-
-### 4. .env ファイルを作成
+### 2. .env ファイルを作成
 
 - cp src/.env.example src/.env
 
@@ -63,6 +55,15 @@ stripe のテスト環境はこちら key 提供すべき？それとも、採�
 STRIPE_KEY=pk_test_51S0ENY5sTB06138YMHarnXVaR6QhYVEQPIhVmq6QxFH7P771KpQLKm2bO5GxuTKKht03lDTVON6r3NbdLj5Ilggt00FXEQd7ix
 STRIPE_SECRET=sk_test_51S0ENY5sTB06138YhTArK8hbgSvX7pvSBvCu92tJpvp2nUQ3fPIUn9IDx8707jJUdOTYYJIWaVQWR8mFKVy7Ys4O00laSR2tn3
 
+### 3. Docker コンテナをビルド・起動
+
+- docker compose up -d --build
+
+### 4. Composer をインストール
+
+- docker compose exec php composer install
+
+
 ### 5. アプリケーションキーを生成
 
 - docker compose exec php php artisan key:generate
@@ -74,6 +75,12 @@ STRIPE_SECRET=sk_test_51S0ENY5sTB06138YhTArK8hbgSvX7pvSBvCu92tJpvp2nUQ3fPIUn9IDx
 ### 7. マイグレーション＆初期データ投入
 
 - docker compose exec php php artisan migrate --seed
+
+---
+
+## テスト
+- テストコードを用意しています。テストケースのIDごとにtestファイルを作成しています（テストケースの項目名と合わせるような形で、testファイル名を設定しています。例：会員登録機能->RegisterTest.php）。ファイルの中には、テスト内容ごとにテストを実施しており、テスト内容をコメントアウトで表記しています。php artisan testコマンドで全てのテストを一括で実行できます。
+
 
 ---
 
@@ -124,8 +131,6 @@ https://docs.google.com/spreadsheets/d/11_8Cg7bE7sEyg7BI1XoBiNtDQYSzN_YWwaQ1QJUA
 ---
 
 ## その他（注意事項、メモ）
-- テストコードを用意しています。テストケースのIDごとにtestファイルを作成しています（テストケースの項目名と合わせるような形で、testファイル名を設定しています。例：会員登録機能->RegisterTest.php）。ファイルの中には、テスト内容ごとにテストを実施しており、テスト内容をコメントアウトで表記しています。php artisan testコマンドで全てのテストを一括で実行できます。
-
 - ユーザー登録時の「ユーザー名」と、プロフィール登録時の「ユーザー名」は別物として、データベース上は取り扱う方針としています。前者は、auth 上のユーザー名であり、変更は頻繁に行わないもの。後者は、サービス利用時に使用されるもので、ニックネームのようなものであり、頻繁に更新を行うことができるもの。auth の情報と、サービス利用上の情報を切り分ける（今回の name ももちろん、住所情報や画像データなども）ことで、テーブルの役割を明確化することを意図しています。
 - stripe 連携については、コーチより、カード決済のみstripe画面へ遷移し、コンビニ支払いの場合は stripe 遷移は行わず、支払い完了とみなす実装とするように指示があったためそのとおり実装。理由としては、コンビニ支払いの場合は、その後の動線（コンビニで支払い処理をしたことを確かめること）がテストでは追えないことと、後述のテストケースで stripe に接続しないパターンを残しておかないとテストケースができないためとのこと。
 - テストケース NO1「会員登録機能」について、正常に会員情報が登録された後の遷移先について、応用実装の「メール認証」を今回は実施しているため、遷移先はプロフィール画面ではなく、メール認証誘導画面として、テストケースを作成するようにコーチから指示があったため、そのようにテストコードを作成しています。
