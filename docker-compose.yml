@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   nginx:
@@ -13,8 +13,14 @@ services:
 
   php:
     build: ./docker/php
+    working_dir: /var/www
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - COMPOSER_TMP_DIR=/tmp/composer
     volumes:
       - ./src:/var/www/
+      - vendor:/var/www/vendor
 
   mysql:
     image: mysql:8.0.29
@@ -47,3 +53,6 @@ services:
       ports:
         - "1025:1025"
         - "8025:8025"
+
+volumes:
+  vendor:
