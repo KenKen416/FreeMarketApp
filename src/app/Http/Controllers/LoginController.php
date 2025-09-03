@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use App\Models\User;
 
 class LoginController extends Controller
 {

@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\ConditionsTableSeeder;
 use App\Models\Item;
@@ -20,7 +19,6 @@ class MylistTest extends TestCase
     {
         parent::setUp();
         $this->seed(ConditionsTableSeeder::class);
-
     }
 
     //いいねした商品だけが表示される

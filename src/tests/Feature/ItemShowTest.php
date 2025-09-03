@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\ConditionsTableSeeder;
 use App\Models\Item;
@@ -23,7 +22,7 @@ class ItemShowTest extends TestCase
         $this->seed(ConditionsTableSeeder::class);
         $this->seed(CategoriesTableSeeder::class);
     }
-//必要な情報が表示される
+    //必要な情報が表示される
     public function test_item_show_page_loads_successfully(): void
     {
         $item = Item::factory()->create();
@@ -33,8 +32,8 @@ class ItemShowTest extends TestCase
         Profile::factory()->create(['user_id' => $user1->id]);
         Profile::factory()->create(['user_id' => $user2->id]);
         Like::factory()->count(3)->create(['item_id' => $item->id]);
-        Comment::factory()->create(['item_id' => $item->id, 'user_id' => $user1->id,'comment'=>'コメント１']);
-        Comment::factory()->create(['item_id' => $item->id, 'user_id' => $user2->id,'comment'=>'コメント２']);
+        Comment::factory()->create(['item_id' => $item->id, 'user_id' => $user1->id, 'comment' => 'コメント１']);
+        Comment::factory()->create(['item_id' => $item->id, 'user_id' => $user2->id, 'comment' => 'コメント２']);
         $likesCount = $item->likes->count();
         $commentsCount = $item->comments->count();
 
@@ -42,7 +41,7 @@ class ItemShowTest extends TestCase
         $response = $this->get(route('items.show', ['item_id' => $item->id]));
         $response->assertStatus(200);
 
-        $response->assertSee('storage/'. $item->image);
+        $response->assertSee('storage/' . $item->image);
         $response->assertSeeText($item->name);
         $response->assertSeeText($item->brand_name);
         $response->assertSeeText(number_format($item->price));

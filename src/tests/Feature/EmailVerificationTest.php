@@ -64,7 +64,7 @@ class EmailVerificationTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertSeeText('認証はこちらから');
-        $response->assertSee('http://localhost:8025/');// メールhogのリンク＝＞メール認証サイトを表示
+        $response->assertSee('http://localhost:8025/'); // メールhogのリンク＝＞メール認証サイトを表示
     }
     //メール認証サイトのメール認証を完了すると、プロフィール設定画面に遷移する
     public function test_email_verification_completes_and_redirects_to_profile_settings(): void

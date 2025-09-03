@@ -93,7 +93,7 @@ class RegisterTest extends TestCase
     {
         $register_data = $this->base() ?? [];
 
-       $response = $this->from(self::URL)
+        $response = $this->from(self::URL)
             ->post(self::URL, $register_data);
 
         $this->assertDatabaseHas('users', [

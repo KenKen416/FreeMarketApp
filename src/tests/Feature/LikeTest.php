@@ -25,15 +25,15 @@ class LikeTest extends TestCase
         $this->seed(CategoriesTableSeeder::class);
     }
 
-private function createItem(): Item
-{
-    return Item::factory()->create([
-        'name' => 'Test Item',
-        'brand_name' => 'Test Brand',
-        'price' => 3333,
-        'description' => 'Test Description'
-    ]);
-}
+    private function createItem(): Item
+    {
+        return Item::factory()->create([
+            'name' => 'Test Item',
+            'brand_name' => 'Test Brand',
+            'price' => 3333,
+            'description' => 'Test Description'
+        ]);
+    }
 
 
     //いいねアイコンを押下することによって、いいねした商品として登録することができる

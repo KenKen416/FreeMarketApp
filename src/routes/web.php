@@ -48,8 +48,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
     Route::post('/sell', [ItemController::class, 'store'])->name('items.store');
-
-
-
-
 });
