@@ -11,21 +11,21 @@
 
     <div class="form-group">
       <label for="post_code">郵便番号</label>
-      <input type="text" name="post_code" id="post_code" class="input" value="{{ old('post_code') }}">
+      <input type="text" name="post_code" id="post_code" class="input" value="{{ old('post_code', $post_code) }}">
       @error('post_code')
       <span class="error-message">{{ $message }}</span>
       @enderror
     </div>
     <div class="form-group">
       <label for="address">住所</label>
-      <input type="text" name="address" id="address" class="input" value="{{ old('address')}}">
+      <input type="text" name="address" id="address" class="input" value="{{ old('address', $address) }}">
       @error('address')
       <span class="error-message">{{ $message }}</span>
       @enderror
     </div>
     <div class="form-group">
       <label for="building">建物名</label>
-      <input type="text" name="building" id="building" class="input" value="{{ old('building')}}">
+      <input type="text" name="building" id="building" class="input" value="{{ old('building', $building) }}">
       @error('building')
       <span class="error-message">{{ $message }}</span>
       @enderror

@@ -4,6 +4,9 @@
 @endsection
 @section('title', '購入確認')
 @section('content')
+@if($item->purchase_count === 1)
+<p>この商品はすでに購入されています。</p>
+@else
 <form action="{{ route('purchases.store', ['item_id' => $item->id]) }}" method="POST" class="payment-form">
   @csrf
   <div class="section-left">
@@ -97,4 +100,5 @@
     <button type="submit" class="btn btn--purchase">購入する</button>
   </div>
 </form>
+@endif
 @endsection

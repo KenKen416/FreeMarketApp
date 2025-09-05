@@ -28,9 +28,6 @@
 ### 2. .env ファイルを作成
 
 - cp src/.env.example src/.env
-
-#### .env 設定についての注意
-
 - .env の中の stripe 関連のキーについては、自身で取得したものを入力してください
   例）
   　 STRIPE_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -62,7 +59,7 @@
 ## テスト
 
 - テストコードを用意しています。テストケースの ID ごとに test ファイルを作成しています（テストケースの項目名と合わせるような形で、test ファイル名を設定しています。例：会員登録機能->RegisterTest.php）。ファイルの中には、テスト内容ごとにテストを実施しており、テスト内容をコメントアウトで表記しています。php artisan test コマンドで全てのテストを一括で実行できます。
-docker compose exec php php artisan test
+- docker compose exec php php artisan test
 
 ---
 

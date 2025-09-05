@@ -49,7 +49,7 @@ class ItemController extends Controller
     {
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
-        $item = Item::findOrFail($item_id);
+        $item = Item::withCount('purchase')->findOrFail($item_id);
         $item_condition = Condition::findOrFail($item->condition_id);
         $categories = $item->categories()->get();
         $likes_count = Like::where('item_id', $item->id)->count();

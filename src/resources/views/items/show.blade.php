@@ -4,6 +4,10 @@
 @endsection
 @section('title', '商品詳細')
 @section('content')
+@if($item->purchase_count === 1)
+<p>この商品はすでに購入されています。</p>
+@else
+
 <div class="item-show">
   <div class="item-show__image">
     <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-image">
@@ -113,4 +117,5 @@
     </div>
   </div>
 </div>
+@endif
 @endsection

@@ -16,7 +16,7 @@ class PurchaseController extends Controller
     public function create($item_id)
     {
         $user = Auth::user();
-        $item = Item::findOrFail($item_id);
+        $item = Item::withCount('purchase')->findOrFail($item_id);
 
         $post_code = $user->profile->post_code ?? '';
         $address = $user->profile->address ?? '';
@@ -28,7 +28,7 @@ class PurchaseController extends Controller
     public function updateAddress(AddressRequest $request, $item_id)
     {
         $user = Auth::user();
-        $item = Item::findOrFail($item_id);
+        $item = Item::withCount('purchase')->findOrFail($item_id);
 
         $post_code = $request->post_code;
         $address = $request->address;
@@ -40,8 +40,13 @@ class PurchaseController extends Controller
 
     public function editAddress($item_id)
     {
+        $user = Auth::user();
 
-        return view('purchases.edit_address', compact('item_id'));
+        $post_code = $user->profile->post_code ?? '';
+        $address = $user->profile->address ?? '';
+        $building = $user->profile->building ?? '';
+
+        return view('purchases.edit_address', compact('item_id', 'post_code', 'address', 'building'));
     }
 
     public function store(PurchaseRequest $request, $item_id)

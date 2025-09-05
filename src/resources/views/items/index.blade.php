@@ -34,11 +34,13 @@ $keyword = request('keyword');
   <div class="item-card">
     @if($item->purchase_count === 1)
     <span class="badge badge--sold">sold</span>
-    @endif
-    <a href="{{route('items.show', ['item_id' => $item->id])}}" class="item-card__link">
-      <img src="{{asset('storage/'.$item->image)}}" alt="{{$item->name}}" class="item-card__image">
-      <h3 class="item-card__title">{{$item->name}}</h3>
-    </a>
+      <a href="" class="item-card__link">
+      @else
+      <a href="{{route('items.show', ['item_id' => $item->id])}}" class="item-card__link">
+        @endif
+        <img src="{{asset('storage/'.$item->image)}}" alt="{{$item->name}}" class="item-card__image">
+        <h3 class="item-card__title">{{$item->name}}</h3>
+      </a>
   </div>
   @empty
   <p>商品が見つかりませんでした。</p>
