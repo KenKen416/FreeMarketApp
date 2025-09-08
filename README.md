@@ -59,6 +59,9 @@
 ## テスト
 
 - テストコードを用意しています。テストケースの ID ごとに test ファイルを作成しています（テストケースの項目名と合わせるような形で、test ファイル名を設定しています。例：会員登録機能->RegisterTest.php）。ファイルの中には、テスト内容ごとにテストを実施しており、テスト内容をコメントアウトで表記しています。php artisan test コマンドで全てのテストを一括で実行できます。
+
+- docker compose exec mysql mysql -u root -p  パスワードは、docker-compose.ymlファイルのMYSQL_ROOT_PASSWORD:に設定されているrootを入力する。
+- MySQLログイン後、CREATE DATABASE demo_test; として、テスト用データベースを作成
 - docker compose exec php php artisan test
 
 ---
