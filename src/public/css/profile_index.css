@@ -98,3 +98,21 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+/* 左上の小さな赤丸バッジ */
+.trade-badge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: #e60012;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 20px;
+  border-radius: 999px;
+  display: inline-block;
+  text-align: center;
+}

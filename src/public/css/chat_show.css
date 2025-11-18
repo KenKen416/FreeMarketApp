@@ -1,0 +1,370 @@
+/* chat/show 用スタイル（profile_index.css と分離） */
+
+.chat-page {
+  display: flex;
+  min-height: 90vh;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* サイドバー */
+.chat-sidebar {
+  width: 160px;
+  background: #6e6e6e;
+  color: #fff;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-heading {
+  font-weight: 700;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.sidebar-item {
+  margin-bottom: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.sidebar-item.active .sidebar-link {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.sidebar-thumb {
+  width: 48px;
+  height: 48px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sidebar-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar-meta {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-title {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.sidebar-unread {
+  background: #e60012;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* メイン */
+.chat-main {
+  flex: 1;
+  padding: 0;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* トップバー（追加） */
+.chat-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.topbar-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #222;
+}
+
+/* 完了ボタン（トップバー右） */
+.topbar-actions {
+  margin-left: auto;
+}
+
+.btn-complete {
+  background: #fff0f0;
+  border: 1px solid #ffb6b6;
+  color: #c00000;
+  padding: .5rem .9rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* 商品ヘッダ */
+.product-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+
+.product-thumb {
+  width: 96px;
+  height: 96px;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-name {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.product-price {
+  color: #666;
+  margin-top: 6px;
+}
+
+/* メッセージエリア */
+.messages-area {
+  min-height: 360px;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: transparent;
+}
+
+.message--me {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.message--other {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.message-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  /* 名前と本文の間のスペース */
+}
+
+
+
+.message-author {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message-body {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  background: #f4f4f4;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+
+
+.message-text {
+  white-space: pre-wrap;
+  color: #222;
+  line-height: 1.4;
+}
+
+.message-image img {
+  max-width: 220px;
+  max-height: 220px;
+  margin-top: 8px;
+  border-radius: 6px;
+  display: block;
+}
+
+/* メタデータ */
+.message-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.5rem;
+  color: #777;
+  margin-top: 2px;
+  margin-right: 4px;
+}
+
+.message-actions a {
+  margin-left: 8px;
+  color: #777;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+/* 投稿フォーム */
+.chat-form-section {
+  border-top: 1px solid #e5e5e5;
+  padding: 12px 20px;
+}
+
+.chat-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chat-textarea {
+  flex: 1;
+  min-height: 48px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.form-controls {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.btn-image {
+  background: #fff;
+  border: 1px solid #ff8080;
+  color: #ff4d4d;
+  padding: 8px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.input-file {
+  display: none;
+}
+
+.image-preview {
+  margin-top: 8px;
+  padding: 8px;
+}
+
+.image-preview .preview-img {
+  max-width: 120px;
+  max-height: 48px;
+  border-radius: 6px;
+  display: block;
+}
+
+/* 送信ボタン */
+.btn-send {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  justify-items: center;
+}
+
+.btn-send img {
+  width: 80%;
+}
+
+/* エラー表示 */
+.form-errors {
+  background: #fff0f0;
+  border: 1px solid #f2c2c2;
+  padding: 8px;
+  border-radius: 6px;
+  color: #900;
+}

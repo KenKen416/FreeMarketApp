@@ -38,8 +38,27 @@ $page = request('page');
     <li class="{{($page === 'buy') ? 'active' : ''}}">
       <a href="{{route('mypage.index', ['page' => 'buy'])}}">購入した商品</a>
     </li>
+    <li class="{{($page === 'trade') ? 'active' : ''}}">
+      <a href="{{route('mypage.index', ['page' => 'trade'])}}">取引中の商品
+        @if(isset($tradePurchases))
+        @php
+        $totalUnread = $tradePurchases->sum('unread_count');
+        @endphp
+        @if($totalUnread > 0)
+        <span class="tab-unread">{{ $totalUnread }}</span>
+        @endif
+        @endif
+      </a>
+    </li>
   </ul>
 </div>
+
+{{-- コンテンツ切替 --}}
+@if(request()->query('page') === 'trade')
+{{-- 取引中タブ --}}
+@include('profile._trades')
+@else
+{{-- 既存の items 表示ロジック --}}
 <div class="items-list">
   @forelse ($items as $item)
   <div class="item-card">
@@ -55,6 +74,6 @@ $page = request('page');
   <p>商品が見つかりませんでした。</p>
   @endforelse
 </div>
-
+@endif
 
 @endsection

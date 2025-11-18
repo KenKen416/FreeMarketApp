@@ -6,6 +6,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/sell', [ItemController::class, 'create'])->name('items.create');
     Route::post('/sell', [ItemController::class, 'store'])->name('items.store');
+
+    // 特定取引のチャット画面
+    Route::get('/chats/{purchase}', [ChatController::class, 'show'])->name('chats.show');
+    // メッセージ投稿
+    Route::post('/chats/{purchase}/messages', [MessageController::class, 'store'])->name('messages.store');
 });

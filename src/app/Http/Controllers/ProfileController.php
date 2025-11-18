@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Http\Requests\ProfileRequest;
+use App\Models\Purchase;
+use App\Models\Message;
 
 
 class ProfileController extends Controller
@@ -26,10 +28,8 @@ class ProfileController extends Controller
             ];
         }
 
-        //購入した商品タブ選択時
-        if (
-            $request->query('page') === 'buy'
-        ) {
+        // 購入した商品タブ選択時
+        if ($request->query('page') === 'buy') {
             $items = Item::with(['purchase'])
                 ->withCount('purchase')
                 ->whereHas('purchase', fn($q) => $q->where('user_id', $user->id))
@@ -37,18 +37,54 @@ class ProfileController extends Controller
                 ->orderBy('id', 'desc')
                 ->get();
         }
-
-
-        //出品した商品タブ選択時
+        // 出品した商品タブ選択時
+        elseif ($request->query('page') === 'sell') {
+            $items = Item::where('user_id', $user->id)
+                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
+                ->get();
+        }
+        // その他（デフォルト）
         else {
-            $items = Item::withCount('purchase')
-                ->where('user_id', $user->id)
+            $items = Item::where('user_id', $user->id)
                 ->orderBy('created_at', 'desc')
                 ->orderBy('id', 'desc')
                 ->get();
         }
 
-        return view('profile.index', compact('items', 'profile'));
+        // 取引中タブ（page=trade）用に purchases を取得して未読数と最終メッセージ時刻を追加
+        $tradePurchases = null;
+        if ($request->query('page') === 'trade') {
+            // ユーザーが関係する purchases（購入者 OR 出品者）を取得
+            $tradePurchases = Purchase::with('item')
+                ->where(function ($q) use ($user) {
+                    $q->where('user_id', $user->id)
+                        ->orWhereHas('item', function ($q2) use ($user) {
+                            $q2->where('user_id', $user->id);
+                        });
+                })
+                ->get()
+                ->map(function ($purchase) use ($user) {
+                    // 未読件数（自分以外の送信者からの未読）
+                    $unread = Message::where('purchase_id', $purchase->id)
+                        ->whereNull('read_at')
+                        ->where('sender_id', '!=', $user->id)
+                        ->count();
+                    $purchase->unread_count = $unread;
+
+                    // 最新メッセージ時刻（なければ purchase.updated_at を代わりに使う）
+                    $purchase->last_message_at = Message::where('purchase_id', $purchase->id)
+                        ->latest('created_at')
+                        ->value('created_at') ?? $purchase->updated_at;
+
+                    return $purchase;
+                })
+                // 新着順（最新メッセージがあるものを上）
+                ->sortByDesc('last_message_at')
+                ->values();
+        }
+
+        return view('profile.index', compact('profile', 'items', 'tradePurchases'));
     }
 
     public function edit()
