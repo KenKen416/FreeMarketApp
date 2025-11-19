@@ -42,8 +42,7 @@
           $otherUser = null;
           if($purchase->user_id === auth()->id()) {
           $otherUser = $purchase->item->user;
-          }
-          else{
+          } else {
           $otherUser = $purchase->user;
           }
           @endphp
@@ -60,12 +59,17 @@
       </div>
 
       <div class="topbar-actions">
-        {{-- 取引完了ボタン（購入者のみ表示） --}}
+        {{-- 取引完了ボタン（購入者のみ表示）。ルートは purchases.complete を想定 --}}
         @if($purchase->user_id === auth()->id())
-        {{-- 自分が購入者の場合のみ表示 --}}
-        <form action="#" method="POST">@csrf
-          <button type="button" class="btn-complete">取引を完了する</button>
+        <form action="{{ route('purchases.complete', $purchase->id) }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-complete">取引を完了する</button>
         </form>
+        @endif
+        @if (session('failed'))
+        <div class="alert alert-warning">
+          {{ session('failed') }}
+        </div>
         @endif
       </div>
     </div>
@@ -86,12 +90,11 @@
     {{-- メッセージエリア --}}
     <section class="messages-area">
       @foreach($messages as $message)
-      @php $isMe = $message->sender_id === auth()->id();
-      @endphp
-      <div class={{$isMe ? "message--me" : "message--other"}}>
-        @if($isMe)
-        {{-- 自分のメッセージの場合 --}}
+      @php $isMe = $message->sender_id === auth()->id(); @endphp
 
+      <div class="{{ $isMe ? 'message--me' : 'message--other' }}">
+        @if($isMe)
+        {{-- 自分のメッセージ表示 --}}
         <div class="message-row">
           <div class="message-author">
             {{ optional(auth()->user()->profile)->name ?? 'あなた' }}
@@ -104,9 +107,8 @@
             @endif
           </div>
         </div>
-
         @else
-        {{-- 相手のメッセージの場合 --}}
+        {{-- 相手のメッセージ表示 --}}
         <div class="message-row">
           <div class="message-avatar">
             @if(!empty($otherUser) && optional($otherUser->profile)->image)
@@ -129,11 +131,22 @@
           </div>
           @endif
         </div>
+
         @if($isMe)
         <div class="message-meta">
           <span class="message-actions">
-            <a href="#" class="link-edit">編集</a>
-            <a href="#" class="link-delete">削除</a>
+            {{-- 編集リンク：data 属性を設定（edit-message.js で利用） --}}
+            <a href="#" class="link-edit"
+              data-message-id="{{ $message->id }}"
+              data-purchase-id="{{ $purchase->id }}"
+              data-message-body="{{ e($message->body) }}">編集</a>
+
+            {{-- 削除はフォームを送る方式（CSRF・DELETE） --}}
+            <form action="{{ route('messages.destroy', ['purchase' => $purchase->id, 'message' => $message->id]) }}" method="POST" style="display:inline-block;margin-left:8px;" onsubmit="return confirm('メッセージを削除してもよろしいですか？');">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="link-delete" style="background:none;border:none;color:#777;cursor:pointer;padding:0;">削除</button>
+            </form>
           </span>
         </div>
         @endif
@@ -175,68 +188,52 @@
 </div>
 @endsection
 
-@section('scripts')
-<script src="{{ asset('js/chat-draft.js') }}"></script>
-<script>
-  // 画像プレビュー機能
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('スクリプト開始'); // デバッグ用
+{{-- モーダル partial を読み込む（ファイルを作成済みの前提） --}}
+@include('partials._rating_modal')
+@include('partials._edit_message_modal')
 
+@section('scripts')
+<script>
+  // サーバ -> クライアントのフラグをページ末で即時セット（DOMContentLoaded に依存させない）
+  (function() {
+    try {
+      document.body.dataset.showRating = "{{ session('show_rating') ? 1 : 0 }}";
+    } catch (e) {
+      // 万が一 template で何か起きても安全にデフォルトを設定
+      if (document && document.body) {
+        document.body.dataset.showRating = "0";
+      }
+    }
+  })();
+</script>
+
+<script src="{{ asset('js/chat-draft.js') }}"></script>
+<script src="{{ asset('js/rating-modal.js') }}"></script>
+<script src="{{ asset('js/edit-message.js') }}"></script>
+
+<script>
+  // 画像プレビュー（簡潔版）
+  document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('image');
     const preview = document.getElementById('image_preview');
-
-    console.log('fileInput:', fileInput);
-    console.log('preview:', preview);
-
-    if (!fileInput || !preview) {
-      console.log('要素が見つかりません');
-      return;
-    } else {
-      console.log('要素が見つかりました');
-    }
+    if (!fileInput || !preview) return;
 
     fileInput.addEventListener('change', function(e) {
-      console.log('ファイルが選択されました:', e.target.files);
-
-      // 既存のプレビューをクリア
       preview.innerHTML = '';
-
-      const file = e.target.files[0];
-      if (!file) {
-        console.log('ファイルがありません');
-        return;
-      }
-
-      console.log('ファイル名:', file.name);
-      console.log('ファイルタイプ:', file.type);
-
-      // ファイルタイプをチェック
-      if (!file.type.startsWith('image/')) {
-        console.log('画像ファイルではありません');
-        return;
-      }
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
-        console.log('ファイル読み込み完了');
-
+      reader.onload = function(ev) {
         const img = document.createElement('img');
-        img.src = e.target.result;
+        img.src = ev.target.result;
+        img.className = 'preview-img';
         img.style.maxWidth = '120px';
         img.style.maxHeight = '120px';
         img.style.borderRadius = '6px';
-        img.style.display = 'block';
-        img.style.marginTop = '8px';
-        img.style.border = '1px solid #ccc'; // デバッグ用
-
         preview.appendChild(img);
-        console.log('画像をプレビューに追加しました');
       };
-
-      reader.onerror = function() {
-        console.log('ファイル読み込みエラー');
-      };
-
       reader.readAsDataURL(file);
     });
   });

@@ -368,3 +368,142 @@
   border-radius: 6px;
   color: #900;
 }
+
+.rating-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 2100;
+  padding: 20px;
+}
+
+.rating-modal {
+  width: 520px;
+  max-width: calc(100% - 40px);
+  background: #fffcea;
+  /* クリーム色 */
+  border-radius: 12px;
+  border: 1px solid #d6cfa8;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  position: relative;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* close */
+.rating-modal__close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* header */
+.rating-modal__header {
+  padding: 20px 22px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+}
+
+.rating-modal__title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* body */
+.rating-modal__body {
+  padding: 18px 22px 10px;
+}
+
+.rating-modal__lead {
+  margin: 0 0 12px 0;
+  color: #6b6b6b;
+  font-size: 0.95rem;
+}
+
+/* stars */
+.rating-modal__stars {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 0 6px;
+}
+
+.star {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .08s ease;
+}
+
+.star:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
+
+.star .star-icon {
+  font-size: 46px;
+  color: #d9d9d9;
+  /* 空の星（灰） */
+  transition: color .12s ease, transform .08s ease;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* 選択された星 */
+.star.active .star-icon,
+.star.hover .star-icon {
+  color: #ffd93b;
+  /* 黄色 */
+  transform: scale(1.06);
+}
+
+/* footer */
+.rating-modal__footer {
+  padding: 14px 18px 18px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+}
+
+.rating-modal__submit {
+  background: #ff8f8f;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.rating-modal__submit:active {
+  transform: translateY(1px);
+}
+
+/* small screens */
+@media (max-width: 560px) {
+  .rating-modal {
+    width: 92%;
+  }
+
+  .star .star-icon {
+    font-size: 36px;
+  }
+}

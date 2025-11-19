@@ -8,6 +8,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\PurchaseCompleteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/checkout/cancel', [PurchaseController::class, 'cancel'])
         ->name('checkout.cancel');
     Route::get('/purchases/complete', [PurchaseController::class, 'complete'])
-        ->name('purchases.complete');
+        ->name('purchases.complete.index');
 
     Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage.index');
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,4 +57,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/chats/{purchase}', [ChatController::class, 'show'])->name('chats.show');
     // メッセージ投稿
     Route::post('/chats/{purchase}/messages', [MessageController::class, 'store'])->name('messages.store');
+    // メッセージ編集/削除
+    Route::patch('/chats/{purchase}/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+    Route::delete('/chats/{purchase}/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    // 取引完了
+    Route::post('/purchases/{purchase}/complete', [PurchaseCompleteController::class, 'complete'])->name('purchases.complete');
+    // 評価
+    Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
 });

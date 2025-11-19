@@ -64,7 +64,7 @@ class PurchaseController extends Controller
                 'payment_method' => 'konbini',
                 'status'         => 'pending',
             ]);
-            return redirect()->route('purchases.complete')
+            return redirect()->route('purchases.complete.index')
                 ->with('success', 'コンビニ払いの受付を完了しました。');
         }
 

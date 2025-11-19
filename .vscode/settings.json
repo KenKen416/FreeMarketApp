@@ -46,6 +46,8 @@
     "phpmyadmin",
     "phpredis",
     "phpunit",
+    "Queueable",
+    "ratee",
     "Rmand",
     "Rolax",
     "sslmode",
