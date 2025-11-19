@@ -213,14 +213,12 @@ $showRatingFlag = isset($showRating) ? (bool) $showRating : (bool) session('show
 @section('scripts')
 <script>
   // サーバ -> クライアントのフラグをページ末で即時セット（DOMContentLoaded に依存させない）
-  (function() {
+  (function(){
     try {
       document.body.dataset.showRating = "{{ session('show_rating') ? 1 : 0 }}";
     } catch (e) {
       // 万が一 template で何か起きても安全にデフォルトを設定
-      if (document && document.body) {
-        document.body.dataset.showRating = "0";
-      }
+      if (document && document.body) { document.body.dataset.showRating = "0"; }
     }
   })();
 </script>
