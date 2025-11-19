@@ -192,6 +192,24 @@
 @include('partials._rating_modal')
 @include('partials._edit_message_modal')
 
+@php
+// PHP 側で単純な boolean にしておく（Blade 内での複雑な式を避ける）
+$showRatingFlag = isset($showRating) ? (bool) $showRating : (bool) session('show_rating');
+@endphp
+
+@section('scripts')
+@php
+// PHP 側で単純 boolean にしておく（Blade 内の複雑式を避ける）
+$showRatingFlag = isset($showRating) ? (bool) $showRating : (bool) session('show_rating');
+@endphp
+
+@section('scripts')
+@php
+// PHP 側で単純な boolean にしておく（複雑な式を JS 内に残さない）
+$showRatingFlag = isset($showRating) ? (bool) $showRating : (bool) session('show_rating');
+@endphp
+
+@section('scripts')
 @section('scripts')
 <script>
   // サーバ -> クライアントのフラグをページ末で即時セット（DOMContentLoaded に依存させない）

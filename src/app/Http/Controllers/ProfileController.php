@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Purchase;
 use App\Models\Message;
+use App\Models\Rating;
 
 
 class ProfileController extends Controller
@@ -83,8 +84,11 @@ class ProfileController extends Controller
                 ->sortByDesc('last_message_at')
                 ->values();
         }
+        // 評価の平均値（四捨五入して整数に）
+        $ratingAvg = Rating::where('ratee_id', $user->id)->avg('score');
+        $ratingAvgRounded = $ratingAvg ? (int) round($ratingAvg) : null;
 
-        return view('profile.index', compact('profile', 'items', 'tradePurchases'));
+        return view('profile.index', compact('profile', 'items', 'tradePurchases', 'ratingAvgRounded'));
     }
 
     public function edit()

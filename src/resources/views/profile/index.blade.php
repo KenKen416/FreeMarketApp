@@ -20,12 +20,29 @@
     <img src="{{ asset('storage/images/default.png') }}" alt="デフォルト画像" class="profile-header__image">
     @endif
 
-    <div class="profile-header__name">
-      {{$profile->name ? $profile->name : '名前未設定'}}
+    <div class="profile-header__name-rating">
+      <div class="profile-header__name">
+        {{$profile->name ? $profile->name : '名前未設定'}}
+      </div>
+
+      @if(!empty($ratingAvgRounded))
+      <div class="profile-rating" aria-label="評価">
+        <div class="profile-rating__stars" title="平均評価: {{ $ratingAvgRounded }} / 5">
+          @for($i = 1; $i <= 5; $i++)
+            @if($i <=$ratingAvgRounded)
+            <span class="star star--filled" aria-hidden="true">★</span>
+            @else
+            <span class="star star--empty" aria-hidden="true">☆</span>
+            @endif
+            @endfor
+        </div>
+      </div>
+      @endif
     </div>
+    <a href="{{ route('profile.edit') }}" class="btn btn-profile-edit">プロフィールを編集</a>
   </div>
-  <a href="{{ route('profile.edit') }}" class="btn btn-profile-edit">プロフィールを編集</a>
 </div>
+
 
 @php
 $page = request('page');

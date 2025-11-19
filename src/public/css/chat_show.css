@@ -507,3 +507,110 @@
     font-size: 36px;
   }
 }
+
+/* 編集モーダルスタイル（chat 内編集をモーダル表示にする） */
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 3000;
+  padding: 20px;
+}
+
+.edit-modal {
+  width: 640px;
+  max-width: calc(100% - 40px);
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.edit-modal__close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.edit-modal__title {
+  margin: 0 0 12px 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.edit-form__row {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.edit-form__textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px;
+  resize: vertical;
+}
+
+.edit-form__file-row {
+  align-items: center;
+}
+
+.image-preview img,
+.edit-image-preview img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 6px;
+  display: block;
+}
+
+.edit-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-primary {
+  background: #ff8080;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-secondary {
+  background: #f0f0f0;
+  color: #222;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* small screens */
+@media (max-width:700px) {
+  .edit-modal {
+    width: 96%;
+    padding: 12px;
+  }
+
+  .edit-form__textarea {
+    min-height: 60px;
+  }
+}

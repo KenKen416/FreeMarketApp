@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Purchase;
 use App\Models\Message;
+use App\Models\Rating; // 追加
 
 class ChatController extends Controller
 {
@@ -66,6 +67,30 @@ class ChatController extends Controller
             ->where('sender_id', '!=', $user->id)
             ->update(['read_at' => now()]);
 
-        return view('chat.show', compact('purchase', 'messages', 'purchases'));
+        // otherUser: 自分ではない相手ユーザー（Blade のロジックをここで扱う）
+        if ($purchase->user_id === $user->id) {
+            // 自分が購入者の場合、相手は出品者
+            $otherUser = optional($purchase->item)->user;
+        } else {
+            // 自分が出品者の場合、相手は購入者
+            $otherUser = $purchase->user;
+        }
+
+        // FN013: 出品者による取引後評価モーダル表示判定
+        // showRating = true にする条件：
+        //  - 取引が完了している (completed_at がセットされている)
+        //  - 現在のユーザーが出品者であること
+        //  - 現在のユーザー（出品者）が当該取引でまだ評価（rater）していないこと
+        $showRating = false;
+        if ($purchase->completed_at && $isSeller) {
+            $existing = Rating::where('rater_id', $user->id)
+                ->where('purchase_id', $purchase->id)
+                ->first();
+            if (!$existing) {
+                $showRating = true;
+            }
+        }
+
+        return view('chat.show', compact('purchase', 'messages', 'purchases', 'otherUser', 'showRating'));
     }
 }
